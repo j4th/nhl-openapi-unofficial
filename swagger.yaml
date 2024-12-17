@@ -8,7 +8,7 @@ info:
     schedules, standings, and other hockey-related information.
   version: '1.0'
 servers:
-  - url: https://api-web.nhle.com/
+  - url: https://api-web.nhle.com
     description: NHL Web API Production Server
 
 paths:
