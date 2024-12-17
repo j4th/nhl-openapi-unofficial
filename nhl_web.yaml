@@ -1,0 +1,1056 @@
+openapi: '3.0.3'
+info:
+  title: NHL Web API
+  description: |
+    Official NHL Web API providing access to NHL statistics, scores, player information, team data, and more.
+    This API allows you to retrieve various NHL-related data including player stats, team information, game scores,
+    schedules, standings, and other hockey-related information.
+  version: '1.0'
+servers:
+  - url: https://api-web.nhle.com/
+    description: NHL Web API Production Server
+
+paths:
+  /v1/player/{playerId}/game-log/{season}/{gameType}:
+    get:
+      summary: Get Player Game Log
+      description: Retrieve the game log for a specific player, season, and game type
+      parameters:
+        - name: playerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 8478402
+          description: Player ID
+        - name: season
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 20232024
+          description: Season in YYYYYYYY format (e.g., 20232024)
+        - name: gameType
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2
+          description: Game type (2 for regular season, 3 for playoffs)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/player/{playerId}/landing:
+    get:
+      summary: Get Player Information
+      description: Retrieve information for a specific player
+      parameters:
+        - name: playerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 8478402
+          description: Player ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/player/{playerId}/game-log/now:
+    get:
+      summary: Get Current Game Log
+      description: Retrieve the game log for a specific player as of the current moment
+      parameters:
+        - name: playerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 8478402
+          description: Player ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/skater-stats-leaders/current:
+    get:
+      summary: Get Current Skater Stats Leaders
+      description: Retrieve current skater stats leaders
+      parameters:
+        - name: categories
+          in: query
+          required: false
+          schema:
+            type: string
+            example: goals
+          description: Categories to filter by
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 5
+          description: Number of results to return (-1 for all)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/skater-stats-leaders/{season}/{gameType}:
+    get:
+      summary: Get Season Skater Stats Leaders
+      description: Retrieve skater stats leaders for a specific season and game type
+      parameters:
+        - name: season
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 20222023
+          description: Season in YYYYYYYY format
+        - name: gameType
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2
+          description: Game type (2 for regular season, 3 for playoffs)
+        - name: categories
+          in: query
+          required: false
+          schema:
+            type: string
+            example: assists
+          description: Categories to filter by
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 3
+          description: Number of results to return (-1 for all)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/goalie-stats-leaders/current:
+    get:
+      summary: Get Current Goalie Stats Leaders
+      description: Retrieve current goalie stats leaders
+      parameters:
+        - name: categories
+          in: query
+          required: false
+          schema:
+            type: string
+            example: wins
+          description: Categories to filter by
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 5
+          description: Number of results to return (-1 for all)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/goalie-stats-leaders/{season}/{gameType}:
+    get:
+      summary: Get Season Goalie Stats Leaders
+      description: Retrieve goalie stats leaders for a specific season and game type
+      parameters:
+        - name: season
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 20232024
+          description: Season in YYYYYYYY format
+        - name: gameType
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2
+          description: Game type (2 for regular season, 3 for playoffs)
+        - name: categories
+          in: query
+          required: false
+          schema:
+            type: string
+            example: wins
+          description: Categories to filter by
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 3
+          description: Number of results to return (-1 for all)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/player-spotlight:
+    get:
+      summary: Get Player Spotlight
+      description: Retrieve information about players in the spotlight
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/standings/now:
+    get:
+      summary: Get Current Standings
+      description: Retrieve the standings as of the current moment
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/standings/{date}:
+    get:
+      summary: Get Standings by Date
+      description: Retrieve the standings for a specific date
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 2023-11-10
+          description: Date in YYYY-MM-DD format
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/standings-season:
+    get:
+      summary: Get Standings Season Information
+      description: Retrieves information for each season's standings
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/club-stats/{team}/now:
+    get:
+      summary: Get Current Club Stats
+      description: Retrieve current statistics for a specific club
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/club-stats-season/{team}:
+    get:
+      summary: Get Club Stats Seasons
+      description: Returns an overview of the stats for each season for a specific club
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/club-stats/{team}/{season}/{gameType}:
+    get:
+      summary: Get Club Stats by Season
+      description: Retrieve the stats for a specific team, season, and game type
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+        - name: season
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 20232024
+          description: Season in YYYYYYYY format
+        - name: gameType
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2
+          description: Game type (2 for regular season, 3 for playoffs)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/scoreboard/{team}/now:
+    get:
+      summary: Get Team Scoreboard
+      description: Retrieve the scoreboard for a specific team as of the current moment
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/roster/{team}/current:
+    get:
+      summary: Get Current Team Roster
+      description: Retrieve the roster for a specific team as of the current moment
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/roster/{team}/{season}:
+    get:
+      summary: Get Team Roster by Season
+      description: Retrieve the roster for a specific team and season
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+        - name: season
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 20232024
+          description: Season in YYYYYYYY format
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/roster-season/{team}:
+    get:
+      summary: Get Team Roster Seasons
+      description: Returns a list of all seasons that the team played
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/prospects/{team}:
+    get:
+      summary: Get Team Prospects
+      description: Retrieve prospects for a specific team
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/club-schedule-season/{team}/now:
+    get:
+      summary: Get Current Team Season Schedule
+      description: Retrieve the season schedule for a specific team as of the current moment
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/club-schedule-season/{team}/{season}:
+    get:
+      summary: Get Team Season Schedule
+      description: Retrieve the season schedule for a specific team and season
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+        - name: season
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 20232024
+          description: Season in YYYYYYYY format
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/club-schedule/{team}/month/now:
+    get:
+      summary: Get Current Month Schedule
+      description: Retrieve the monthly schedule for a specific team as of the current moment
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/club-schedule/{team}/month/{month}:
+    get:
+      summary: Get Month Schedule
+      description: Retrieve the monthly schedule for a specific team and month
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+        - name: month
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 2023-11
+          description: Month in YYYY-MM format
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/club-schedule/{team}/week/{date}:
+    get:
+      summary: Get Week Schedule
+      description: Retrieve the weekly schedule for a specific team and date
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 2023-11-10
+          description: Date in YYYY-MM-DD format
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/club-schedule/{team}/week/now:
+    get:
+      summary: Get Current Week Schedule
+      description: Retrieve the weekly schedule for a specific team as of the current moment
+      parameters:
+        - name: team
+          in: path
+          required: true
+          schema:
+            type: string
+            example: EDM
+          description: Three-letter team code
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/schedule/now:
+    get:
+      summary: Get Current Schedule
+      description: Retrieve the current schedule
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/schedule/{date}:
+    get:
+      summary: Get Schedule by Date
+      description: Retrieve the schedule for a specific date
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 2023-11-10
+          description: Date in YYYY-MM-DD format
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/schedule-calendar/now:
+    get:
+      summary: Get Current Schedule Calendar
+      description: Retrieve the schedule calendar as of the current moment
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/schedule-calendar/{date}:
+    get:
+      summary: Get Schedule Calendar by Date
+      description: Retrieve the schedule calendar for a specific date
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 2023-11-10
+          description: Date in YYYY-MM-DD format
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/score/now:
+    get:
+      summary: Get Current Daily Scores
+      description: Retrieve daily scores as of the current moment
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/score/{date}:
+    get:
+      summary: Get Daily Scores by Date
+      description: Retrieve daily scores for a specific date
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 2023-11-10
+          description: Date in YYYY-MM-DD format
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/scoreboard/now:
+    get:
+      summary: Get Current Scoreboard
+      description: Retrieve the overall scoreboard as of the current moment
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/where-to-watch:
+    get:
+      summary: Get Streaming Options
+      description: Retrieve information about streaming options
+      parameters:
+        - name: include
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional include parameter
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/gamecenter/{gameId}/play-by-play:
+    get:
+      summary: Get Play by Play
+      description: Retrieve play-by-play information for a specific game
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2023020204
+          description: Game ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/gamecenter/{gameId}/landing:
+    get:
+      summary: Get Game Landing
+      description: Retrieve landing information for a specific game
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2023020204
+          description: Game ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/gamecenter/{gameId}/boxscore:
+    get:
+      summary: Get Game Boxscore
+      description: Retrieve boxscore information for a specific game
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2023020204
+          description: Game ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/wsc/game-story/{gameId}:
+    get:
+      summary: Get Game Story
+      description: Retrieve game story information for a specific game
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2023020204
+          description: Game ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/network/tv-schedule/{date}:
+    get:
+      summary: Get TV Schedule by Date
+      description: Retrieve the TV schedule for a specific date
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 2023-11-10
+          description: Date in YYYY-MM-DD format
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/network/tv-schedule/now:
+    get:
+      summary: Get Current TV Schedule
+      description: Retrieve the current TV schedule
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/partner-game/{countryCode}/now:
+    get:
+      summary: Get Partner Game Odds
+      description: Retrieve odds for games in a specific country as of the current moment
+      parameters:
+        - name: countryCode
+          in: path
+          required: true
+          schema:
+            type: string
+            example: CA
+          description: Country code
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/playoff-series/carousel/{season}:
+    get:
+      summary: Get Playoff Series Carousel
+      description: Retrieve an overview of each playoff series
+      parameters:
+        - name: season
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 20232024
+          description: Season in YYYYYYYY format
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/schedule/playoff-series/{season}/{seriesLetter}:
+    get:
+      summary: Get Playoff Series Schedule
+      description: Retrieve the schedule for a specific playoff series
+      parameters:
+        - name: season
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 20232024
+          description: Season in YYYYYYYY format
+        - name: seriesLetter
+          in: path
+          required: true
+          schema:
+            type: string
+            example: string
+          description: Single letter indicating which series to retrieve
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/playoff-bracket/{year}:
+    get:
+      summary: Get Playoff Bracket
+      description: Retrieve the current bracket for a specific year's playoffs
+      parameters:
+        - name: year
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2022
+          description: Year in YYYY format
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/season:
+    get:
+      summary: Get Seasons
+      description: Retrieve a list of all season IDs past & present in the NHL
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/draft/rankings/now:
+    get:
+      summary: Get Current Draft Rankings
+      description: Retrieve a list of all draft prospects by category of prospect as of the current moment
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/draft/rankings/{season}/{prospectCategory}:
+    get:
+      summary: Get Draft Rankings by Season
+      description: Retrieve a list of all draft prospects by category of prospect for a specific season
+      parameters:
+        - name: season
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2023
+          description: Season in YYYY format
+        - name: prospectCategory
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+          description: Prospect Category (1 - North American Skater, 2 - International Skater, 3 - North American Goalie, 4 - International Goalie)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/meta:
+    get:
+      summary: Get Meta Information
+      description: Retrieve meta information
+      parameters:
+        - name: players
+          in: query
+          required: false
+          schema:
+            type: string
+            example: 8478402
+          description: Optional players parameter
+        - name: teams
+          in: query
+          required: false
+          schema:
+            type: string
+            example: EDM,TOR
+          description: Optional teams parameter
+        - name: seasonStates
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional seasonStates parameter
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/meta/game/{gameId}:
+    get:
+      summary: Get Game Meta Information
+      description: Retrieve information for a specific game
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2023020204
+          description: Game ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /v1/location:
+    get:
+      summary: Get Location
+      description: Returns country code that the webserver thinks the user is in
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /model/v1/openapi.json:
+    get:
+      summary: Get OpenAPI Specification
+      description: Retrieve the OpenAPI specification
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: Not found

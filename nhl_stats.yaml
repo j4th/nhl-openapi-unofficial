@@ -1,0 +1,683 @@
+openapi: '3.0.3'
+info:
+  title: NHL Stats API
+  description: |
+    Official NHL Stats API providing access to detailed NHL statistics, player information, team data, and more.
+    This API allows you to retrieve various NHL-related statistics including player stats, team information,
+    game data, and other hockey-related information.
+  version: '1.0'
+servers:
+  - url: https://api.nhle.com/stats/rest
+    description: NHL Stats API Production Server
+
+paths:
+  /{lang}/players:
+    get:
+      summary: Get Player Information
+      description: Retrieve player information. Currently returns a truncated list with a total.
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/leaders/skaters/{attribute}:
+    get:
+      summary: Get Skater Leaders
+      description: Retrieve skater leaders for a specific attribute
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+        - name: attribute
+          in: path
+          required: true
+          schema:
+            type: string
+            example: points
+          description: Skater attribute to get leaders for
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/milestones/skaters:
+    get:
+      summary: Get Skater Milestones
+      description: Retrieve skater milestones
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/skater:
+    get:
+      summary: Get Skater Information
+      description: Retrieve skater information
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/skater/{report}:
+    get:
+      summary: Get Skater Stats
+      description: Retrieve skater stats for a specific report
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+        - name: report
+          in: path
+          required: true
+          schema:
+            type: string
+            example: summary
+          description: Skater report type
+        - name: isAggregate
+          in: query
+          required: false
+          schema:
+            type: boolean
+          description: Whether to aggregate the stats
+        - name: isGame
+          in: query
+          required: false
+          schema:
+            type: boolean
+          description: Whether the stats are game-specific
+        - name: factCayenneExp
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Cayenne expression for facts
+        - name: include
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Fields to include
+        - name: exclude
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Fields to exclude
+        - name: cayenneExp
+          in: query
+          required: true
+          schema:
+            type: string
+            example: seasonId=20232024
+          description: Cayenne expression for filtering
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Field to sort by
+        - name: dir
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Sort direction
+        - name: start
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Starting record number
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Number of records to return (-1 for all)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/leaders/goalies/{attribute}:
+    get:
+      summary: Get Goalie Leaders
+      description: Retrieve goalie leaders for a specific attribute
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+        - name: attribute
+          in: path
+          required: true
+          schema:
+            type: string
+            example: gaa
+          description: Goalie attribute to get leaders for
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/goalie/{report}:
+    get:
+      summary: Get Goalie Stats
+      description: Retrieve goalie stats for a specific report
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+        - name: report
+          in: path
+          required: true
+          schema:
+            type: string
+            example: summary
+          description: Goalie report type
+        - name: isAggregate
+          in: query
+          required: false
+          schema:
+            type: boolean
+          description: Whether to aggregate the stats
+        - name: isGame
+          in: query
+          required: false
+          schema:
+            type: boolean
+          description: Whether the stats are game-specific
+        - name: factCayenneExp
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Cayenne expression for facts
+        - name: include
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Fields to include
+        - name: exclude
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Fields to exclude
+        - name: cayenneExp
+          in: query
+          required: true
+          schema:
+            type: string
+            example: seasonId=20232024
+          description: Cayenne expression for filtering
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Field to sort by
+        - name: dir
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Sort direction
+        - name: start
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Starting record number
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Number of records to return (-1 for all)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/milestones/goalies:
+    get:
+      summary: Get Goalie Milestones
+      description: Retrieve goalie milestones
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/draft:
+    get:
+      summary: Get Draft Information
+      description: Retrieve draft information
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/team:
+    get:
+      summary: Get Team Information
+      description: Retrieve list of all teams
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/team/{report}:
+    get:
+      summary: Get Team Stats
+      description: Retrieve team stats for a specific report
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+        - name: report
+          in: path
+          required: true
+          schema:
+            type: string
+            example: summary
+          description: Team report type
+        - name: isAggregate
+          in: query
+          required: false
+          schema:
+            type: boolean
+          description: Whether to aggregate the stats
+        - name: isGame
+          in: query
+          required: false
+          schema:
+            type: boolean
+          description: Whether the stats are game-specific
+        - name: factCayenneExp
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Cayenne expression for facts
+        - name: include
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Fields to include
+        - name: exclude
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Fields to exclude
+        - name: cayenneExp
+          in: query
+          required: false
+          schema:
+            type: string
+            example: seasonId=20232024 and gameTypeId=2
+          description: Cayenne expression for filtering
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Field to sort by
+        - name: dir
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Sort direction
+        - name: start
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Starting record number
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Number of records to return (-1 for all)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/franchise:
+    get:
+      summary: Get Franchise Information
+      description: Retrieve list of all franchises
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/componentSeason:
+    get:
+      summary: Get Component Season
+      description: Retrieve component season information
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/season:
+    get:
+      summary: Get Season
+      description: Retrieve season information
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/game:
+    get:
+      summary: Get Game Information
+      description: Retrieve game information
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/game/meta:
+    get:
+      summary: Get Game Metadata
+      description: Retrieve metadata for game
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/config:
+    get:
+      summary: Get Configuration
+      description: Retrieve configuration information
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /ping:
+    get:
+      summary: Ping Server
+      description: Ping the server to check connectivity
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/country:
+    get:
+      summary: Get Country Information
+      description: Retrieve country information. Returns list of all countries with a hockey presence.
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/shiftcharts:
+    get:
+      summary: Get Shift Charts
+      description: Retrieve shift charts for a specific game
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+        - name: cayenneExp
+          in: query
+          required: true
+          schema:
+            type: string
+            example: gameId=2021020001
+          description: Cayenne expression for filtering by game ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/glossary:
+    get:
+      summary: Get Glossary
+      description: Retrieve the glossary for a specific language
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /{lang}/content/module:
+    get:
+      summary: Get Content Module
+      description: Retrieve content module information
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            example: en
+          description: Language code (e.g., en, fr)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /content/module/meta:
+    get:
+      summary: Get Content Module Metadata
+      description: Retrieve metadata for content modules
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: Not found
